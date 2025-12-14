@@ -6,7 +6,7 @@ import Course from "../models/Course.js";
 
 export const clerkWebhooks= async (req,res)=>{
     try{
-        const payload = req.payload;
+        const payload = req.body;
         const headers = req.headers
         const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
 
@@ -43,7 +43,7 @@ export const clerkWebhooks= async (req,res)=>{
         }
     }catch(error){
         console.log(error);
-        res.json({success:false,message:error.message})
+        res.status(400).json({success:false,message:error.message})
     }
 };
 
