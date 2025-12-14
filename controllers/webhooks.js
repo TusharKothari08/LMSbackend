@@ -6,11 +6,11 @@ import Course from "../models/Course.js";
 
 export const clerkWebhooks=async(req,res)=>{
     try{
-        const data = req.payload;
+        const payload = req.payload;
         const headers = req.headers
         const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
 
-        const msg  = await whook.verify(data,headers);
+        const {data,type}  = await whook.verify(payload,headers);
         console.log("This is user data -> ",data);
         switch(type){
             case 'user.created':{
