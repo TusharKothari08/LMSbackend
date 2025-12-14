@@ -2,20 +2,24 @@ import { Webhook } from "svix";
 import User from "../models/User.js";
 import { Purchase } from "../models/Purchase.js";
 import Course from "../models/Course.js";
+import { verifyWebhook } from "@clerk/express/webhooks"
 
 
 export const clerkWebhooks=async(req,res)=>{
     try{
-        const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
-        const payload = JSON.stringify(req.body); 
+        // const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
+        // const payload = JSON.stringify(req.body); 
 
-        await whook.verify(JSON.stringify(req.body),{
-            "svix-id":req.headers["svix-id"],
-            "svix-timestamp":req.headers["svix-timestamp"],
-            "webhook-signature":req.headers["svix-signature"]
-        })
+        // await whook.verify(JSON.stringify(req.body),{
+        //     "svix-id":req.headers["svix-id"],
+        //     "svix-timestamp":req.headers["svix-timestamp"],
+        //     "webhook-signature":req.headers["svix-signature"]
+        // })
 
-        const {data,type}=req.body ;
+        // const {data,type}=req.body ;
+        const payload = verifyWebhook(req);
+        const data = payload.data;
+        console.log("This is user data -> ",data);
         switch(type){
             case 'user.created':{
                  const userData = {
