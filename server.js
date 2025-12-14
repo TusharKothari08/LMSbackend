@@ -11,6 +11,7 @@ import courseRouter from './routes/courseRoute.js';
 import userRouter from './routes/userRoutes.js';
 import Stripe from 'stripe';
 import morgan from 'morgan';
+import bodyparser from "body-parser"
 
 
 const app=express();
@@ -31,8 +32,8 @@ app.use('/api/educator',express.json(),educatorRouter)
 app.use('/api/course',express.json(),courseRouter)
 app.use('/api/user',express.json(),userRouter)
 app.post('/stripe', express.raw({type: 'application/json'}), stripeWebhooks);
-app.post('/clerk',express.json(),clerkWebhooks)
-app.get('/',(req,res)=>res.send("API Workin33g"))
+app.post('/clerk',bodyparser.raw({type:"application/json"}),clerkWebhooks);
+app.get('/',(req,res)=>res.send("API Working"))
 
 const PORT=5000;
 

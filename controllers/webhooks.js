@@ -4,13 +4,13 @@ import { Purchase } from "../models/Purchase.js";
 import Course from "../models/Course.js";
 
 
-export const clerkWebhooks=async(req,res)=>{
+export const clerkWebhooks= async (req,res)=>{
     try{
         const payload = req.payload;
         const headers = req.headers
         const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
 
-        const {data,type}  = await whook.verify(payload,headers);
+        const {data,type} = whook.verify(payload,headers);
         console.log("This is user data -> ",data);
         switch(type){
             case 'user.created':{
@@ -42,6 +42,7 @@ export const clerkWebhooks=async(req,res)=>{
             default: return res.status(400).json({ success: false, message: "Unhandled event type" });
         }
     }catch(error){
+        console.log(error);
         res.json({success:false,message:error.message})
     }
 };
