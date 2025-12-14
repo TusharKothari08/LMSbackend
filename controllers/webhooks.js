@@ -17,7 +17,7 @@ export const clerkWebhooks=async(req,res)=>{
         // })
 
         // const {data,type}=req.body ;
-        const payload = verifyWebhook(req);
+        const payload = await verifyWebhook(req);
         const data = payload.data;
         console.log("This is user data -> ",data);
         switch(type){
